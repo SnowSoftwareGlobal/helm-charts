@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.aggregator.name | default "snow-aggregator" }}
+  labels:
+    app: "{{ .Values.aggregator.name | default "snow-aggregator" }}-app"
+    {{- if .Values.aggregator.labels }}
+{{ include "aggregator.labels" . | indent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.aggregator.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ .Values.aggregator.name | default "snow-aggregator" }}-app"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.aggregator.name | default "snow-aggregator" }}-app"
+        {{- if .Values.aggregator.templateLabels }}
+{{ include "aggregator.templateLabels" . | indent 8 }}
+        {{- end }}
+    spec:
+      securityContext:
+        runAsUser: 65532
+      {{- if .Values.aggregator.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.aggregator.imagePullSecrets | indent 8 }}
+      {{- end }}
+      containers:
+        - name: "{{ .Values.messageQueue.name | default "nsqd" }}"
+          image: "{{ .Values.messageQueue.repository }}:{{ .Values.messageQueue.tag }}"
+          imagePullPolicy: {{ .Values.messageQueue.imagePullPolicy }}
+          volumeMounts:
+            - name : nsqd-ssl
+              mountPath: /home/nonroot/servercert/
+          resources:
+{{ toYaml .Values.messageQueue.resources | indent 12 }}
+          command: ["/nsqd"]
+          args: ["-tls-cert=/home/nonroot/servercert/tls.crt","-tls-key=/home/nonroot/servercert/tls.key","-tls-client-auth-policy=require","-tls-required=true","-log-level=warn"]
+          ports:
+            - containerPort: 4150
+            - containerPort: 4152
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/prestop"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+        - name: {{ .Values.aggregator.name | default "snow-aggregator" }}
+          image: "{{ .Values.aggregator.repository }}:{{ .Values.aggregator.tag }}"
+          imagePullPolicy: {{ .Values.aggregator.imagePullPolicy }}
+          volumeMounts:
+            - name : aggregator-ssl
+              mountPath: /home/nonroot/cert/
+            - name: secret-key
+              mountPath: /secrets/
+          env:
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+            - name: SECRET_KEY
+              value: "/secrets/secretkey"
+            {{- if .Values.aggregator.additionalEnvironmentVars }}
+            {{- range .Values.aggregator.additionalEnvironmentVars }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end}}
+            {{- end}}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+          resources:
+{{ toYaml .Values.aggregator.resources | indent 12 }}
+      volumes:
+        - name: aggregator-ssl
+          secret:
+            secretName: {{ .Values.existingAggregatorCertificate | default "snow-cert-aggregator" }}
+        - name : nsqd-ssl
+          secret:
+            secretName: {{ .Values.existingMQCertificate | default "snow-cert-mq" }}
+        - name: secret-key
+          secret:
+            secretName: {{ .Values.existingSecretKey | default "snow-secretkey" }}
+      terminationGracePeriodSeconds: {{ .Values.aggregator.shutdownTime | default 130 }}
+      {{- if .Values.aggregator.affinity }}
+      affinity:
+{{ toYaml .Values.aggregator.affinity | indent 8 }}
+      {{- end}}
+      {{- if .Values.aggregator.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.aggregator.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.aggregator.tolerations }}
+      tolerations:
+{{ toYaml .Values.aggregator.tolerations | indent 8 }}
+      {{- end }}

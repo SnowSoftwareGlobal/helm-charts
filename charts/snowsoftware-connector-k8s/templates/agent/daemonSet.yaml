@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ .Values.agent.name | default "snow-agent" }}
+  labels:
+    app: "{{ .Values.agent.name | default "snow-agent" }}-app"
+    {{- if .Values.agent.labels }}
+{{ include "agent.labels" . | indent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: "{{ .Values.agent.name | default "snow-agent" }}-app"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.agent.name | default "snow-agent" }}-app"
+        {{- if .Values.agent.templateLabels }}
+{{ include "agent.templateLabels" . | indent 8 }}
+        {{- end }}
+
+    spec:
+      securityContext:
+        runAsUser: 65532
+      serviceAccountName: {{ .Values.agent.accountName | default "snow-account" }}
+      {{- if .Values.agent.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.agent.imagePullSecrets | indent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.agent.name | default "snow-agent" }}
+          image: "{{ .Values.agent.repository }}:{{ .Values.agent.tag }}"
+          imagePullPolicy: {{ .Values.agent.imagePullPolicy }}
+          volumeMounts:
+            - name : snow-agent-ssl
+              mountPath: /home/nonroot/cert/
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: NSQD_HEADLESS
+              value: {{ .Values.service.headlessName | default "snow-service-headless" }}
+            - name: NSQD_HOST
+              value: "{{ .Values.service.name | default "snow-service" }}:{{ .Values.service.port | default 4150 }}"
+            {{- if .Values.agent.additionalEnvironmentVars }}
+            {{- range .Values.agent.additionalEnvironmentVars }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end}}
+            {{- end}}
+          resources:
+{{ toYaml .Values.agent.resources | indent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+      volumes:
+        - name:  snow-agent-ssl
+          secret:
+            secretName: {{ .Values.existingAgentCertificate | default "snow-cert-agent" }}
+      {{- if .Values.agent.affinity }}
+      affinity:
+{{ toYaml .Values.agent.affinity | indent 8 }}
+      {{- end}}
+      {{- if .Values.agent.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.agent.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.agent.tolerations }}
+      tolerations:
+{{ toYaml .Values.agent.tolerations | indent 8 }}
+      {{- end }}

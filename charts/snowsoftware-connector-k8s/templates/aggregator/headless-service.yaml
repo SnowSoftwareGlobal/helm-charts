@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: "{{ .Values.aggregator.name | default "snow-aggregator" }}-app"
+  name: {{ .Values.service.headlessName | default "snow-service-headless" }}
+spec:
+  clusterIP: None
+  selector:
+    app: "{{ .Values.aggregator.name | default "snow-aggregator" }}-app"
+  ports:
+    - port: 4150
+      targetPort: 4150

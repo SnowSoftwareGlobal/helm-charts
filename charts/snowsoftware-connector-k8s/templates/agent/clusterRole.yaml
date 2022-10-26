@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Values.agent.clusterRole.name | default "snow-clusterrole"}}
+rules:
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["watch"]
+  - apiGroups: [""]
+    resources: ["nodes", "pods", "configmaps"]
+    verbs: ["list", "get","watch"]
+  - apiGroups: ["apps"]
+    resources: ["replicasets", "daemonsets", "statefulsets", "deployments"]
+    verbs: ["list", "get","watch"]
