@@ -98,7 +98,7 @@ agent:
 messageQueue:
   name:             # If provided, this overrides the name of the message queue.
   repository: ghcr.io/snowsoftwareglobal/snow-nsqd
-  tag: 1.0
+  tag: 1.0.0
   imagePullPolicy: IfNotPresent
   # Resources for the messageQueue
   resources: {}
