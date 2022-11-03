@@ -57,6 +57,8 @@ spec:
               mountPath: /home/nonroot/cert/
             - name: secret-key
               mountPath: /secrets/
+            - name : nsqd-ssl
+              mountPath: /home/nonroot/servercert/
           env:
             - name: POD_UID
               valueFrom:
@@ -64,6 +66,8 @@ spec:
                   fieldPath: metadata.uid
             - name: SECRET_KEY
               value: "/secrets/secretkey"
+            - name: SSL_CERT_FILE
+              value: "/home/nonroot/servercert/tls.crt"
             {{- if .Values.aggregator.additionalEnvironmentVars }}
             {{- range .Values.aggregator.additionalEnvironmentVars }}
             - name: {{ .name }}
