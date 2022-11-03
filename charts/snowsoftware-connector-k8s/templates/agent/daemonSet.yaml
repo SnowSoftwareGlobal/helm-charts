@@ -18,7 +18,6 @@ spec:
         {{- if .Values.agent.templateLabels }}
 {{ include "agent.templateLabels" . | indent 8 }}
         {{- end }}
-
     spec:
       securityContext:
         runAsUser: 65532
@@ -34,6 +33,8 @@ spec:
           volumeMounts:
             - name : snow-agent-ssl
               mountPath: /home/nonroot/cert/
+            - name : nsqd-ssl
+              mountPath: /home/nonroot/servercert/
           env:
             - name: NODE_NAME
               valueFrom:
@@ -51,6 +52,8 @@ spec:
               value: {{ .Values.service.headlessName | default "snow-service-headless" }}
             - name: NSQD_HOST
               value: "{{ .Values.service.name | default "snow-service" }}:{{ .Values.service.port | default 4150 }}"
+            - name: SSL_CERT_FILE
+              value: "/home/nonroot/servercert/tls.crt"
             {{- if .Values.agent.additionalEnvironmentVars }}
             {{- range .Values.agent.additionalEnvironmentVars }}
             - name: {{ .name }}
@@ -68,6 +71,9 @@ spec:
         - name:  snow-agent-ssl
           secret:
             secretName: {{ .Values.existingAgentCertificate | default "snow-cert-agent" }}
+        - name : nsqd-ssl
+          secret:
+            secretName: {{ .Values.existingMQCertificate | default "snow-cert-mq" }}
       {{- if .Values.agent.affinity }}
       affinity:
 {{ toYaml .Values.agent.affinity | indent 8 }}
