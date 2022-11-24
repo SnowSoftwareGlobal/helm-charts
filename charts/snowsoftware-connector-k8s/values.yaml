@@ -36,13 +36,12 @@ aggregator:
   #    value: "VARVALUE2"
 
   # Resources for the aggregator
-  resources: {}
-  # requests:
-  #   cpu: 200m
-  #   memory: 256Mi
-  # limits:
-  #   cpu: 200m
-  #   memory: 256Mi
+  resources: 
+    requests:
+      cpu: 300m
+      memory: 100M
+    limits:
+      memory: 250M
 
   nodeSelector: {}
 
@@ -78,13 +77,12 @@ agent:
   #    value: "VARVALUE2"
 
   # Resources for the agent
-  resources: {}
-  # requests:
-  #   cpu: 200m
-  #   memory: 256Mi
-  # limits:
-  #   cpu: 200m
-  #   memory: 256Mi
+  resources: 
+    requests:
+      cpu: 100m
+      memory: 50M
+    limits:
+      memory: 250M
 
   imagePullSecrets: []
   #   - name: "<REG_SECRET>"
@@ -101,10 +99,9 @@ messageQueue:
   tag: 1.0.0
   imagePullPolicy: IfNotPresent
   # Resources for the messageQueue
-  resources: {}
-  # requests:
-  #   cpu: 200m
-  #   memory: 256Mi
-  # limits:
-  #   cpu: 200m
-  #   memory: 256Mi
+  resources: 
+    requests:
+      cpu: 300m
+      memory: 100M
+    limits:
+      memory: 250M
