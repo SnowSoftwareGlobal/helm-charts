@@ -21,9 +21,9 @@ helm install snowsoftware-connector snowsoftware/snowsoftware-connector-k8s --se
 ```
 ## Install container connectors with custom certificates
 
-By default this chart generates Secrets for your secretkey and ssl certificates. The ssl certificates are used for internal communication only and will never be accessible outside your cluster. 
+By default this chart generates Secrets for your secretkey and ssl certificates. The ssl certificates are used for internal communication only and are never be accessible outside your cluster. 
 
-Use this procedure if you want to create and manage these Secrets manually.  The ssl certificate Secrets must include include entries for a tls.crt and tls.key for the agent, aggregator and message queue.
+Use this procedure if you want to create and manage these Secrets manually.  The ssl certificate Secrets must include entries for a tls.crt and tls.key for the agent, aggregator and message queue.
 
 ```
 helm repo add snowsoftware https://snowsoftwareglobal.github.io/helm-charts
