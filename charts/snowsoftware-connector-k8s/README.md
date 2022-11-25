@@ -38,7 +38,7 @@ helm install snowsoftware-connector snowsoftware/snowsoftware-connector-k8s \
 
 ## Install container connectors with amended values
 
-Copy the values.yaml file from https://github.com/SnowSoftwareGlobal/helm-charts/charts/snowsoftware-connector-k8s/values.yaml and amend it as you require.
+Copy the values.yaml file from https://github.com/SnowSoftwareGlobal/helm-charts/blob/main/charts/snowsoftware-connector-k8s/values.yaml and amend it as you require.
 
 ```
 helm repo add snowsoftware https://snowsoftwareglobal.github.io/helm-charts
@@ -62,7 +62,7 @@ View the charts available:
 helm search repo
 ```
 
-List what is currently installed:
+List and verify what is currently installed:
 
 ```
 helm list
