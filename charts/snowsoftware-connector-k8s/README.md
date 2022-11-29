@@ -9,7 +9,7 @@ For container connectors to collect data from your Kubernetes clusters, you must
 - Kubernetes 1.23+
 - Helm 3+
 - Outbound network access on port 443
-- SecretKey generated in Snow Atlas for container connector (See [Set up container connectors](https://docs.snowsoftware.com/snow-atlas/en/index-en.html))
+- SecretKey generated in Snow Atlas for container connector (See [Set up container connectors](https://docs.snowsoftware.com/snow-atlas/en/UUID-87f651b5-485d-016a-f80a-ece675a3d24b.html))
 
 ## Install container connectors with default values
 
