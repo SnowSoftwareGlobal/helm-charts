@@ -16,7 +16,7 @@ existingMQCertificate:             # The name of the existing message queue cert
 aggregator:
   name:                  # If provided, this overrides the name of the aggregator.
   repository: ghcr.io/snowsoftwareglobal/snow-aggregator
-  tag:        0.9.9
+  tag:        0.9.10
   imagePullPolicy: IfNotPresent
   replicas: 3            # How many replicas to deploy.
   ingressEnabled: true   # If enabled, a NetworkPolicy is created, restricting all communication to internal services only.
@@ -57,7 +57,7 @@ service:
 agent:
   name:              # If provided this will override the name of the agent.
   repository: ghcr.io/snowsoftwareglobal/snow-agent
-  tag: 0.9.8
+  tag: 0.9.10-linux
   imagePullPolicy: IfNotPresent
   accountName:       # If provided, this overrides the name of the account to create.
   clusterRole:
