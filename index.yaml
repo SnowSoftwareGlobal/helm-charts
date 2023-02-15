@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   snowsoftware-connector-k8s:
   - apiVersion: v2
+    appVersion: v0.9.10
+    created: "2023-02-15T13:27:36.299262459Z"
+    description: A Helm chart for deploying the Snow Software k8s connector
+    digest: a07fbc1df7a698eeb78a199eadb59c1134d6c837fc29082fdbd139b68e5b3993
+    name: snowsoftware-connector-k8s
+    type: application
+    urls:
+    - https://github.com/SnowSoftwareGlobal/helm-charts/releases/download/snowsoftware-connector-k8s-0.9.10/snowsoftware-connector-k8s-0.9.10.tgz
+    version: 0.9.10
+  - apiVersion: v2
     appVersion: v0.9.9
     created: "2022-11-24T15:58:14.50648951Z"
     description: A Helm chart for deploying the Snow Software k8s connector
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/SnowSoftwareGlobal/helm-charts/releases/download/snowsoftware-connector-k8s-0.9.9/snowsoftware-connector-k8s-0.9.9.tgz
     version: 0.9.9
-generated: "2022-11-24T15:58:14.50649651Z"
+generated: "2023-02-15T13:27:36.299268759Z"
