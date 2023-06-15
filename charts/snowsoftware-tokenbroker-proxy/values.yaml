@@ -1,0 +1,23 @@
+tokenbrokerProxy:
+  name:  #If provided, this overrides the name of the aggregator.
+  repository: ghcr.io/snowsoftwareglobal/iam-tokenbroker-proxy
+  tag:        0.1.7
+  imagePullPolicy: IfNotPresent
+  replicas: 1 # How many replicas to deploy.
+  imagePullSecrets: []
+    #   - name: "<REG_SECRET>"
+
+  # Additional labels to apply to the aggregator deployment and aggregator deployment template
+  #   label1: value1
+  labels: {}
+  templateLabels: {}
+
+  resources: 
+    requests:
+      cpu: 300m
+      memory: 50M
+    limits:
+      memory: 150M
+
+service:
+  name: # If provided, this overrides the name of the service.

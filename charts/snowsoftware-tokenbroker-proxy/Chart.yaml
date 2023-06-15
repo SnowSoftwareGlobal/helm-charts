@@ -1,0 +1,16 @@
+apiVersion: v2
+name: tokenbroker
+description: Convertins between Mutual TLS (MTLS) and OAuth2 based authentication
+version: 1.0.0
+type: application
+keywords:
+  - iam
+  - platform
+  - token
+  - broker
+  - proxy
+maintainers:
+  - name: Gustav Donelius Waller
+    email: gustav.donelius.waller@snowsoftware.com
+  - name: Tomasz Sikora
+    email: tomasz.sikora@snowsoftware.com
