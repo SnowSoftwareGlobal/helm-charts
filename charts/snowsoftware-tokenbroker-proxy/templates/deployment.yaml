@@ -24,7 +24,6 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.tokenbrokerProxy.imagePullSecrets | indent 8 }}
       {{- end }}
-      hostNetwork: true # todo: remove this
       containers:
         - name: {{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}
           image: "{{ .Values.tokenbrokerProxy.repository }}:{{ .Values.tokenbrokerProxy.tag }}"
