@@ -32,7 +32,7 @@ helm repo add snowsoftware https://snowsoftwareglobal.github.io/helm-charts
 helm repo update
 ```
 2. Prepare required certificates
-   - ca.crt
+   - clientca.crt
    - server.pem
    - signingcert.pem
 3. Prepare cliendId and clientSecret. Obtain the credentials by registering a token broker proxy application in Snow Atlas.
@@ -50,7 +50,7 @@ type: Opaque
 data:
   clientid: <base64-encoded client id>
   clientsecret: <base64-encoded client secret>
-  ca: <base64-encoded CA>
+  clientca: <base64-encoded client CA>
   servercert: <base64-encoded server cert>
   signingcert: <base64-encoded signing cert>
 ```

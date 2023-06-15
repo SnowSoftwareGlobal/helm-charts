@@ -43,7 +43,7 @@ spec:
           args: [
             "--clientid=$(CLIENT_ID)",
             "--clientsecret=$(CLIENT_SECRET)",
-            "--ca=/certs/ca",
+            "--clientca=/certs/clientca",
             "--servercert=/certs/servercert",
             "--signingcert=/certs/signingcert",
             "--platformurl={{ .Values.tokenbrokerProxy.platformurl }}",

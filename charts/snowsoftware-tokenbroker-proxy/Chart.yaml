@@ -3,9 +3,3 @@ name: tokenbroker
 description: Converts between Mutual TLS (MTLS) and OAuth2 based authentication
 version: 1.0.0
 type: application
-keywords:
-  - iam
-  - platform
-  - token
-  - broker
-  - proxy
