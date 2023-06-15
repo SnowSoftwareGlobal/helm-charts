@@ -9,7 +9,7 @@ These are all of the parameters the service requires:
 * Client Secret - Client Secret registered in Snow Identity Provider in OicdApplication
 * Server Certificate - SSL certificate used by the tokenbroker proxy service
 * Signing Certificate - Certificate for signing the token
-* Certificate Authority - CA used for creation of the above certificates
+* Certificate Authority - Client certificate authority
 * Platform URL - URL to Snow Identity Provider
 * BrokerPort - Port on which the tokenbroker proxy service rus
 * BrokerHost - Host name for tokenbroker proxy service
@@ -35,7 +35,7 @@ helm repo update
    - ca.crt
    - server.pem
    - signingcert.pem
-3. Prepare cliendId and clientSecret. They are generated when you register a new application in Identity Provider.
+3. Prepare cliendId and clientSecret. Obtain the credentials by registering a token broker proxy application in Snow Atlas.
 ## Installation
 1. Install secrets and certificates on the cluster
 
