@@ -32,12 +32,12 @@ spec:
             - name: CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: tokenbroker-certs
+                  name: snowsoftware-tokenbroker-proxy-secrets
                   key: clientid
             - name: CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: tokenbroker-certs
+                  name: snowsoftware-tokenbroker-proxy-secrets
                   key: clientsecret
           args: [
             "--clientid=$(CLIENT_ID)",
@@ -56,4 +56,4 @@ spec:
       volumes:
         - name: certs
           secret:
-            secretName: tokenbroker-certs
+            secretName: snowsoftware-tokenbroker-proxy-secrets
