@@ -4,9 +4,7 @@ tokenbrokerProxy:
   tag:        0.1.8
   imagePullPolicy: IfNotPresent
   replicas: 1 # How many replicas to deploy.
-  imagePullSecrets: []
-    #   - name: "<REG_SECRET>"
-
+  
   # Additional labels to apply to the aggregator deployment and aggregator deployment template
   #   label1: value1
   labels: {}
