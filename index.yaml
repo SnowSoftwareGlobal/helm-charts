@@ -21,4 +21,14 @@ entries:
     urls:
     - https://github.com/SnowSoftwareGlobal/helm-charts/releases/download/snowsoftware-connector-k8s-0.9.9/snowsoftware-connector-k8s-0.9.9.tgz
     version: 0.9.9
-generated: "2023-02-15T13:27:36.299268759Z"
+  snowsoftware-tokenbroker-proxy:
+  - apiVersion: v2
+    created: "2023-06-19T12:35:15.21289399Z"
+    description: Converts between Mutual TLS (MTLS) and OAuth2 based authentication
+    digest: 49d9b76c4d4ee7b9b27de882887e233a661bfe23180899553744e61cced52de8
+    name: snowsoftware-tokenbroker-proxy
+    type: application
+    urls:
+    - https://github.com/SnowSoftwareGlobal/helm-charts/releases/download/snowsoftware-tokenbroker-proxy-1.0.0/snowsoftware-tokenbroker-proxy-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-06-19T12:35:15.21290079Z"
