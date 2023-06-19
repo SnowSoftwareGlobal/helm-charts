@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}
+  labels:
+    app: "{{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}-app"
+    {{- if .Values.tokenbrokerProxy.labels }}
+{{ include "tokenbroker-proxy.labels" . | indent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.tokenbrokerProxy.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}-app"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}-app"
+        {{- if .Values.tokenbrokerProxy.templateLabels }}
+{{ include "tokenbroker-proxy.templateLabels" . | indent 8 }}
+        {{- end }}
+    spec:
+      {{- if .Values.tokenbrokerProxy.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.tokenbrokerProxy.imagePullSecrets | indent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}
+          image: "{{ .Values.tokenbrokerProxy.repository }}:{{ .Values.tokenbrokerProxy.tag }}"
+          imagePullPolicy: {{ .Values.tokenbrokerProxy.imagePullPolicy }}
+          env:
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: snowsoftware-tokenbroker-proxy-secrets
+                  key: clientid
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: snowsoftware-tokenbroker-proxy-secrets
+                  key: clientsecret
+          args: [
+            "--clientid=$(CLIENT_ID)",
+            "--clientsecret=$(CLIENT_SECRET)",
+            "--clientca=/certs/clientca",
+            "--servercert=/certs/servercert",
+            "--signingcert=/certs/signingcert",
+            "--platformurl={{ .Values.tokenbrokerProxy.platformurl }}",
+            "--brokerport={{ .Values.tokenbrokerProxy.brokerport }}",
+            "--brokerhost={{ .Values.tokenbrokerProxy.brokerhost }}"
+          ]
+          volumeMounts:
+            - name: certs
+              mountPath: /certs
+              readOnly: true
+      volumes:
+        - name: certs
+          secret:
+            secretName: snowsoftware-tokenbroker-proxy-secrets

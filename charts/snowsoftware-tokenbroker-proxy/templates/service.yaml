@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: "{{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}-app"
+  name: {{ .Values.service.name | default "snow-service" }}
+spec:
+  selector:
+    app: "{{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}-app"
+  ports:
+    - port: {{ .Values.tokenbrokerProxy.brokerport }}
+      targetPort: {{ .Values.tokenbrokerProxy.brokerport }}
+  type: LoadBalancer
