@@ -39,7 +39,7 @@ helm repo update
 ## Installation
 1. Install secrets and certificates on the cluster
 
-   To provide required certificates and secrets to tokenbroker proxy service, (Server Certificate, Signing Certificate, Certificate Authority, Client Id, Client secret) on the cluster using Kubernetes Secrets, create secret.yaml file:
+   To provide required certificates and secrets to tokenbroker proxy service, (Server Certificate, Signing Certificate, Certificate Authority, Client Id, Client secret) on the cluster using Kubernetes Secrets, create secrets.yaml file:
 
 ```yaml
 apiVersion: v1
@@ -58,7 +58,7 @@ Replace the placeholders with the base64 encoded values of client id and secrets
 
 Apply the secrets to your cluster:
 ```
-kubectl apply -f secret.yaml
+kubectl apply -f secrets.yaml
 ```
 2. Prepare values.yaml file
 
