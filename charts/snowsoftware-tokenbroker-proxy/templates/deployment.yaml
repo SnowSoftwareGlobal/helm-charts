@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}
+  name: {{ .Values.tokenbrokerProxy.name | default "snowsoftware-tokenbroker-proxy" }}
   labels:
-    app: "{{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}-app"
+    app: "{{ .Values.tokenbrokerProxy.name | default "snowsoftware-tokenbroker-proxy" }}-app"
     {{- if .Values.tokenbrokerProxy.labels }}
 {{ include "tokenbroker-proxy.labels" . | indent 4 }}
     {{- end }}
@@ -11,11 +11,11 @@ spec:
   replicas: {{ .Values.tokenbrokerProxy.replicas }}
   selector:
     matchLabels:
-      app: "{{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}-app"
+      app: "{{ .Values.tokenbrokerProxy.name | default "snowsoftware-tokenbroker-proxy" }}-app"
   template:
     metadata:
       labels:
-        app: "{{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}-app"
+        app: "{{ .Values.tokenbrokerProxy.name | default "snowsoftware-tokenbroker-proxy" }}-app"
         {{- if .Values.tokenbrokerProxy.templateLabels }}
 {{ include "tokenbroker-proxy.templateLabels" . | indent 8 }}
         {{- end }}
@@ -25,7 +25,7 @@ spec:
 {{ toYaml .Values.tokenbrokerProxy.imagePullSecrets | indent 8 }}
       {{- end }}
       containers:
-        - name: {{ .Values.tokenbrokerProxy.name | default "snow-tokenbroker-proxy" }}
+        - name: {{ .Values.tokenbrokerProxy.name | default "snowsoftware-tokenbroker-proxy" }}
           image: "{{ .Values.tokenbrokerProxy.repository }}:{{ .Values.tokenbrokerProxy.tag }}"
           imagePullPolicy: {{ .Values.tokenbrokerProxy.imagePullPolicy }}
           env:
