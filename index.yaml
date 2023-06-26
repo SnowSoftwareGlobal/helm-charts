@@ -23,6 +23,15 @@ entries:
     version: 0.9.9
   snowsoftware-tokenbroker-proxy:
   - apiVersion: v2
+    created: "2023-06-26T13:29:27.98594202Z"
+    description: Converts between Mutual TLS (MTLS) and OAuth2 based authentication
+    digest: 1babd9ca22ecae4b6fbc0d62d5f44d884b5d1c2f77025dd0726c308c15eac14d
+    name: snowsoftware-tokenbroker-proxy
+    type: application
+    urls:
+    - https://github.com/SnowSoftwareGlobal/helm-charts/releases/download/snowsoftware-tokenbroker-proxy-1.0.1/snowsoftware-tokenbroker-proxy-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2023-06-19T12:35:15.21289399Z"
     description: Converts between Mutual TLS (MTLS) and OAuth2 based authentication
     digest: 49d9b76c4d4ee7b9b27de882887e233a661bfe23180899553744e61cced52de8
@@ -31,4 +40,4 @@ entries:
     urls:
     - https://github.com/SnowSoftwareGlobal/helm-charts/releases/download/snowsoftware-tokenbroker-proxy-1.0.0/snowsoftware-tokenbroker-proxy-1.0.0.tgz
     version: 1.0.0
-generated: "2023-06-19T12:35:15.21290079Z"
+generated: "2023-06-26T13:29:27.98595202Z"
