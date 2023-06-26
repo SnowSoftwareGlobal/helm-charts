@@ -58,7 +58,7 @@ Replace the placeholders with the base64 encoded values of client id and secrets
 
 Apply the secrets to your cluster:
 ```
-kubectl apply -f secret.yaml
+kubectl apply -f secrets.yaml
 ```
 2. Prepare values.yaml file
 
