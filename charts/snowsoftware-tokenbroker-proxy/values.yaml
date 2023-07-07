@@ -1,9 +1,10 @@
 tokenbrokerProxy:
   name:  # If provided, this overrides the name of the deployment.
   repository: ghcr.io/snowsoftwareglobal/iam-tokenbroker-proxy
-  tag:        0.1.8
+  tag:        0.1.9
   imagePullPolicy: IfNotPresent
   replicas: 1 
+  clientdiscriminator: emailAddress # supported values: "emailAddress", "OU", "CN"
   
   labels: {}
   templateLabels: {}

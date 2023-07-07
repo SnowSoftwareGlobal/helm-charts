@@ -13,6 +13,7 @@ These are all of the parameters the service requires:
 * Platform URL - URL to Snow Identity Provider
 * BrokerPort - Port on which the tokenbroker proxy service rus
 * BrokerHost - Host name for tokenbroker proxy service
+* Client Discriminator - field in the client certificate used for determining the client (usually email address). Supported values are "emailAddress", "CN", "OU"
 
 
 # Required Software
@@ -69,6 +70,7 @@ tokenbrokerProxy:
   platformurl: "<snow atlas identity provider URL>"
   brokerport: "8443" # default
   brokerhost: "localhost" # default
+  clientdiscriminator: emailAddress # supported values: "emailAddress", "OU", "CN"
 ```
 
 3. Run helm installation and provide the values.yaml file you just created (example using downloaded file)
