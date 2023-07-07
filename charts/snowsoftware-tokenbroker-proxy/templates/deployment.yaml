@@ -47,7 +47,8 @@ spec:
             "--signingcert=/certs/signingcert",
             "--platformurl={{ .Values.tokenbrokerProxy.platformurl }}",
             "--brokerport={{ .Values.tokenbrokerProxy.brokerport }}",
-            "--brokerhost={{ .Values.tokenbrokerProxy.brokerhost }}"
+            "--brokerhost={{ .Values.tokenbrokerProxy.brokerhost }}",
+            "--clientdiscriminator={{ .Values.tokenbrokerProxy.clientdiscriminator }}"
           ]
           volumeMounts:
             - name: certs
