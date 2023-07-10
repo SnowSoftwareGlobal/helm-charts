@@ -11,6 +11,16 @@ For container connectors to collect data from your Kubernetes clusters, you must
 - Outbound network access on port 443
 - SecretKey generated in Snow Atlas for container connector (See [Set up container connectors](https://docs.snowsoftware.com/snow-atlas/en/UUID-87f651b5-485d-016a-f80a-ece675a3d24b.html))
 
+## Cpu and memory resources
+
+The default and recommended values for the CPU and memory resources are shown in the table below. If you require to modify these values, update the values.yaml file.
+
+|               |  CPU for requests | Memory for requests | Memory for limits |
+|---------------|:-----------------:|:-------------------:|:-----------------:|
+| Agents        |  100 m            | 50  MiB             | 250 MiB           |
+| Aggregators   |  300 m            | 100 MiB             | 250 MiB           |
+| Message queue |  300 m            | 100 MiB             | 250 MiB           |
+
 ## Install container connectors with default values
 
 ```
@@ -44,9 +54,25 @@ Copy the values.yaml file from https://github.com/SnowSoftwareGlobal/helm-charts
 helm repo add snowsoftware https://snowsoftwareglobal.github.io/helm-charts
 helm repo update
 
-helm install snow-connector \ 
-      -f values.yaml \
-      snowsoftware/snowsoftware-connector-k8s
+helm install snow-connector -f values.yaml snowsoftware/snowsoftware-connector-k8s
+```
+
+## Install container conectors with custom namespace
+
+Use this procedure if you want to include a custom namespace when you install the Helm chart.
+When you install the snowsoftware-connector-k8s Helm chart from the repository github.com/SnowSoftwareGlobal/helm-charts, you require the secret key that you generate and copy in Create container connectors.
+
+Add the repository https://snowsoftwareglobal.github.io/helm-charts to your Helm chart repositories:
+
+```
+      helm repo add snowsoftware https://snowsoftwareglobal.github.io/helm-charts
+      helm repo update
+```
+
+Install the connector with the latest version, enter the namespace, and paste in the secret key that you generated:
+
+```
+      helm install -n [namespace] snowsoftware-connector snowsoftware/snowsoftware-connector-k8s --set secretKey=[SecretKey]
 ```
 
 ## Upgrade container connectors
@@ -56,7 +82,7 @@ Load all the new charts from the repository github.com/SnowSoftwareGlobal/helm-c
 helm repo update
 ```
 
-View the charts available:
+### View the charts available:
 
 ```
 helm search repo
@@ -68,17 +94,20 @@ List and verify what is currently installed:
 helm list
 ```
 
-Do one of the following:
-
-Upgrade to a specific version:
+### Upgrade to a specific version:
 
 ```
-helm upgrade snowsofware-connector snowsoftware/snowsoftware-connector-k8s \
-      --version [release version]
+helm upgrade snowsofware-connector snowsoftware/snowsoftware-connector-k8s --version [release version]
 ```
 
-Upgrade to the latest version:
+### Upgrade to the latest version:
 
 ```
 helm upgrade snowsoftware-connector snowsoftware/snowsoftware-connector-k8s
+```
+
+**NOTE**
+If you make changes to the values.yaml file, you must upgrade the helm charts to apply your changes:
+```
+helm upgrade snow-connector -f values.yaml snowsoftware/snowsoftware-connector-k8
 ```
