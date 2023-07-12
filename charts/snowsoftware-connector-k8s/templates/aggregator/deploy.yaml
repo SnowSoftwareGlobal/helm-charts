@@ -33,10 +33,12 @@ spec:
           volumeMounts:
             - name : nsqd-ssl
               mountPath: /home/nonroot/servercert/
+            - name : snow-aggregator-ca
+              mountPath: /home/nonroot/rootca/
           resources:
 {{ toYaml .Values.messageQueue.resources | indent 12 }}
           command: ["/nsqd"]
-          args: ["-tls-cert=/home/nonroot/servercert/tls.crt","-tls-key=/home/nonroot/servercert/tls.key","-tls-client-auth-policy=require","-tls-required=true","-log-level=warn"]
+          args: ["-tls-cert=/home/nonroot/servercert/tls.crt","-tls-key=/home/nonroot/servercert/tls.key","-tls-client-auth-policy=require-verify","-tls-required=true", "-tls-root-ca-file=/home/nonroot/rootca/tls.crt",  "-log-level=warn"]
           ports:
             - containerPort: 4150
             - containerPort: 4152
@@ -53,12 +55,12 @@ spec:
           image: "{{ .Values.aggregator.repository }}:{{ .Values.aggregator.tag }}"
           imagePullPolicy: {{ .Values.aggregator.imagePullPolicy }}
           volumeMounts:
+            - name : snow-aggregator-ca
+              mountPath: /home/nonroot/rootca/
             - name : aggregator-ssl
               mountPath: /home/nonroot/cert/
             - name: secret-key
               mountPath: /secrets/
-            - name : nsqd-ssl
-              mountPath: /home/nonroot/servercert/
           env:
             - name: POD_UID
               valueFrom:
@@ -66,8 +68,8 @@ spec:
                   fieldPath: metadata.uid
             - name: SECRET_KEY
               value: "/secrets/secretkey"
-            - name: SSL_CERT_FILE
-              value: "/home/nonroot/servercert/tls.crt"
+            - name: CA_CERT_FILE
+              value: "/home/nonroot/rootca/tls.crt"
             {{- if .Values.aggregator.additionalEnvironmentVars }}
             {{- range .Values.aggregator.additionalEnvironmentVars }}
             - name: {{ .name }}
@@ -82,6 +84,9 @@ spec:
           resources:
 {{ toYaml .Values.aggregator.resources | indent 12 }}
       volumes:
+        - name:  snow-aggregator-ca
+          secret:
+            secretName: {{ .Values.existingAggregatorCertificate | default "snow-cert-ca" }}
         - name: aggregator-ssl
           secret:
             secretName: {{ .Values.existingAggregatorCertificate | default "snow-cert-aggregator" }}
