@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: helm-charts
+  annotations:
+    github.com/project-slug: SnowSoftwareGlobal/helm-charts
+    devops.io/handled-by: repo-as-code
+    devops.io/version: v1
+    sonarqube.org/project-key: helm-charts
+    circleci.com/project-slug: github/SnowSoftwareGlobal/helm-charts
+  tags:
+    - atlas
+    - az-ug-github-devops
+spec:
+  type: service
+  lifecycle: unknown
+  owner: default/az-ug-github-devops
